@@ -3,39 +3,17 @@ package routes
 import (
 	"net/http"
 
-    "github.com/gittoks/diplom/server/database"
+	db "github.com/gittoks/diplom/server/database"
 )
 
-func productsPageHandler(w http.ResponseWriter, r *http.Request) {
-    user := CheckCookie(w, r)
-    navs := GenerateNavigationBar(user)
-
-    navs[1].IsActive = "active"
-    data := Data{
-        Navs: navs,
-        Content: []interface{}{
-            database.Product{
-                Name: "Яйцо",
-                Description: "Только что отняли у куриц",
-            },
-            database.Product{
-                Name: "Корова",
-                Description: "2 года как родилась у Буренки",
-            },
-            database.Product{
-                Name: "Огурец",
-                Description: "Свежий, хороший, покупай давай",
-            },
-            database.Product{
-                Name: "Сергей",
-                Description: "Особенный овощ - пасхалка",
-            },
-            database.Product{
-                Name: "Курица",
-                Description: "Нет ничего натуральнее чем курица",
-            },
-        },
-    }
-
-    tmpl.ExecuteTemplate(w, "products.html", data)
+// ProductHandler Handler
+// handler for /product
+func ProductHandler(w http.ResponseWriter, r *http.Request) {
+	var products []interface{}
+	temp, err := db.GetProducts()
+	mesTxt, mesTyp := GenerateMessage(err, "Неудалось получить данные о прдуктах", "")
+	for i, value := range temp {
+		products[i] = value
+	}
+	Answer(w, GetNavBar(GetCookie(w, r)), products, "product.html", mesTxt, mesTyp)
 }

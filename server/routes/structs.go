@@ -1,39 +1,47 @@
 package routes
 
 import (
-    "html/template"
+	"html/template"
 )
 
 const (
+	// PORT of server
 	PORT = "3456"
-    MAX = 4096
+	// MEMORY for multipart form
+	MEMORY = 4096
 )
 
 var (
-    tmpl *template.Template
-    navsLogin = []Nav{
-        Nav{IsActive: "", Href: "/", Name: "Информация"},
-        Nav{IsActive: "", Href: "/products", Name: "Товары"},
-        Nav{IsActive: "", Href: "/basket", Name: "Корзина"},
-        Nav{IsActive: "", Href: "/profile", Name: "Личный кабинет"},
-        Nav{IsActive: "", Href: "/forum", Name: "Форум"},
-        Nav{IsActive: "", Href: "/unlogin", Name: "Выйти"},
-    }
-    navsGuess = []Nav{
-        Nav{IsActive: "", Href: "/", Name: "Информация"},
-        Nav{IsActive: "", Href: "/products", Name: "Товары"},
-        Nav{IsActive: "", Href: "/register", Name: "Регистрация"},
-        Nav{IsActive: "", Href: "/login", Name: "Войти"},
-    }
+	tmpl      *template.Template
+	navsLogin = []Nav{
+		Nav{Href: "/", Name: "Информация"},
+		Nav{Href: "/product", Name: "Товары"},
+		Nav{Href: "/basket", Name: "Корзина"},
+		Nav{Href: "/profile", Name: "Личный кабинет"},
+		Nav{Href: "/forum", Name: "Форум"},
+		Nav{Href: "/unlogin", Name: "Выйти"},
+	}
+	navsGuess = []Nav{
+		Nav{Href: "/", Name: "Информация"},
+		Nav{Href: "/product", Name: "Товары"},
+		Nav{Href: "/registration", Name: "Регистрация"},
+		Nav{Href: "/login", Name: "Войти"},
+	}
 )
 
+// Nav struct
+// navigation bar prototype
 type Nav struct {
-    IsActive string
-    Href string
-    Name string
+	IsActive string
+	Href     string
+	Name     string
 }
 
+// Data struct
+// Standart response builder for server
 type Data struct {
-    Navs []Nav
-    Content []interface{}
+	Navs        []Nav
+	Content     []interface{}
+	Message     string
+	MessageType string
 }

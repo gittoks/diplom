@@ -2,37 +2,26 @@ package routes
 
 import (
 	"net/http"
-    "fmt"
 
-    "github.com/gittoks/diplom/server/database"
+	db "github.com/gittoks/diplom/server/database"
 )
 
-func loginPageHandler(w http.ResponseWriter, r *http.Request) {
-    user := CheckCookie(w, r)
-    navs := GenerateNavigationBar(user)
-    if !CheckLogin(w, r, user) {
-        return
-    }
-
-    r.ParseMultipartForm(MAX)
-    if (r.Method == "POST") {
-        loginPageHandlerPOST(w, r, navs, user)
-    }
-
-    loginPageHandlerGET(w, r, navs, user)
+// LoginHandlerGET Handler
+// handler GET method for /login
+func LoginHandlerGET(w http.ResponseWriter, r *http.Request) {
+	Answer(w, GetNavBar(GetCookie(w, r)), nil, "login.html", "", "")
 }
 
-func loginPageHandlerGET(w http.ResponseWriter, r *http.Request, navs []Nav, user database.User) {
-
-    navs[3].IsActive = "active"
-    data := Data{
-        Navs: navs,
-        Content: []interface{}{},
-    }
-
-    tmpl.ExecuteTemplate(w, "login.html", data)
-}
-
-func loginPageHandlerPOST(w http.ResponseWriter, r *http.Request, navs []Nav, user database.User) {
-    fmt.Println("POST", r.PostForm)
+// LoginHandlerPOST Handler
+// handler POST method for /login
+func LoginHandlerPOST(w http.ResponseWriter, r *http.Request) {
+	buyer, err := db.GetBuyer(r)
+	mesTxt, mesTyp := GenerateMessage(err, "Неверный логин или пароль", "Успешная авторизация")
+	if err == nil {
+		cookie := BuyerCookie{ID: buyer.ID, Role: buyer.Role}
+		SetCookie(w, cookie)
+		Answer(w, GetNavBar(cookie), nil, "info.html", mesTxt, mesTyp)
+	} else {
+		Answer(w, GetNavBar(GetCookie(w, r)), nil, "login.html", mesTxt, mesTyp)
+	}
 }

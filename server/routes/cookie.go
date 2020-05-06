@@ -2,47 +2,48 @@ package routes
 
 import (
 	"net/http"
-    "strconv"
-    "strings"
-    "time"
-
-    "github.com/gittoks/diplom/server/database"
+	"strconv"
+	"strings"
 )
 
-func CheckCookie(w http.ResponseWriter, r *http.Request) database.User {
-    user := database.User{}
-    cookieId, err1 := r.Cookie("id");
-    cookieRl, err2 := r.Cookie("role");
-    if err1 != nil || err2 != nil {
-        cookieId = &http.Cookie{"id", "0", "/", "localhost", time.Time{}, "", 0, false, false, 0, "", nil}
-        cookieRl = &http.Cookie{"role", "0", "/", "localhost", time.Time{}, "", 0, false, false, 0, "", nil}
-        http.SetCookie(w, cookieId)
-        http.SetCookie(w, cookieRl)
-        user.ID = 0
-        user.Role = 0
-    } else {
-        user.ID, _ = strconv.Atoi(strings.Split(cookieId.String(), "=")[1])
-        user.Role, _ = strconv.Atoi(strings.Split(cookieRl.String(), "=")[1])
-    }
-    return user
+// BuyerCookie structure
+// Cookie information
+type BuyerCookie struct {
+	ID   uint
+	Role uint
 }
 
-func GenerateNavigationBar(user database.User) []Nav {
-    var navs []Nav
-    if user.Role == 0 {
-        navs = make([]Nav, len(navsGuess))
-        copy(navs, navsGuess)
-    } else {
-        navs = make([]Nav, len(navsLogin))
-        copy(navs, navsLogin)
-    }
-    return navs
+// SetCookie to ResponseWriter
+// BuyerCookie=id,role
+func SetCookie(w http.ResponseWriter, cookie BuyerCookie) {
+	cookies := &http.Cookie{
+		Name:   "BuyerCookie",
+		Value:  strconv.Itoa(int(cookie.ID)) + "," + strconv.Itoa(int(cookie.Role)),
+		Path:   "/",
+		Domain: "localhost",
+	}
+	http.SetCookie(w, cookies)
 }
 
-func CheckLogin(w http.ResponseWriter, r *http.Request, user database.User) bool {
-    if (user.ID != 0) {
-        infoPageHandler(w, r)
-        return false
-    }
-    return true
+// GetCookie from Request
+// BuyerCookie=id,role
+func GetCookie(w http.ResponseWriter, r *http.Request) BuyerCookie {
+	buyerCookie := BuyerCookie{0, 0}
+	cookie, err := r.Cookie("BuyerCookie")
+	if err != nil {
+		SetCookie(w, buyerCookie)
+	} else {
+		strs := strings.Split(cookie.Value, ",")
+		id, errID := strconv.Atoi(strs[0])
+		role, errRole := strconv.Atoi(strs[1])
+		if errID == nil && errRole == nil {
+			buyerCookie = BuyerCookie{
+				ID:   uint(id),
+				Role: uint(role),
+			}
+		} else {
+			SetCookie(w, buyerCookie)
+		}
+	}
+	return buyerCookie
 }

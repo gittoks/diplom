@@ -1,18 +1,9 @@
 package routes
 
-import (
-	"net/http"
-)
+import "net/http"
 
-func infoPageHandler(w http.ResponseWriter, r *http.Request) {
-    user := CheckCookie(w, r)
-    navs := GenerateNavigationBar(user)
-
-    navs[0].IsActive = "active"
-    data := Data{
-        Navs: navs,
-        Content: []interface{}{},
-    }
-
-    tmpl.ExecuteTemplate(w, "info.html", data)
+// InfoHandler Handler
+// handler for /
+func InfoHandler(w http.ResponseWriter, r *http.Request) {
+	Answer(w, GetNavBar(GetCookie(w, r)), nil, "info.html", "", "")
 }
