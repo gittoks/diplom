@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+    {{ template "head.html" . }}
+    <body>
+        <div class="container">
+            {{ template "header.html" . }}
+
+            <div class="content">
+                {{ template "login_content.html" . }}
+            </div>
+
+            {{ template "footer.html" . }}
+        </div>
+    </body>
+    {{ template "scripts.html" . }}
+</html>

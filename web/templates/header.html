@@ -1,0 +1,14 @@
+<br>
+
+<nav class="navbar">
+    <span class="logo-text">Эко магазин</span>
+</nav>
+
+<nav class="nav nav-pills nav-fill">
+    {{ range .Navs }}
+        <a class="nav-item nav-link {{ .IsActive }}" href="{{ .Href }}">{{ .Name }}</a>
+    {{ end }}
+</nav>
+
+<br>
+<br>

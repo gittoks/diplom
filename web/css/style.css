@@ -1,0 +1,23 @@
+
+@font-face {
+	font-family: journalism;
+	src: url('/static/font/journalism.ttf');
+}
+
+.logo-text {
+    font-family: journalism;
+    font-size: 60px;
+}
+
+.footer-text {
+    margin-top: 18px;
+}
+
+.content {
+    min-height: 55vh;
+}
+
+.custom-form {
+    max-width: 400px;
+    margin: auto;
+}
