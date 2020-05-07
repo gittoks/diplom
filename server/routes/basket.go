@@ -3,6 +3,7 @@ package routes
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	db "github.com/gittoks/diplom/server/database"
 )
@@ -30,9 +31,16 @@ func BasketHandlerPOST(w http.ResponseWriter, r *http.Request) {
 			db.DeletePurchase(uint(id))
 			break
 		case "clear":
-			db.DeletePurchases(cookie.ID)
+			db.DeleteBasketOrder(cookie.ID)
 			break
 		case "submit":
+			order, _ := db.GetBasketOrder(cookie.ID)
+			count := db.CountPurchases(order.ID)
+			if count != 0 {
+				order.Status = 2
+				order.Data = time.Now().Format("15:04 02.01.2006")
+				db.UpdateOrder(order)
+			}
 			break
 		}
 		purchases, mesTxt, mesTyp := GeneratePurchases(cookie.ID)
@@ -44,7 +52,8 @@ func BasketHandlerPOST(w http.ResponseWriter, r *http.Request) {
 
 // GeneratePurchases function
 func GeneratePurchases(id uint) (interface{}, string, string) {
-	temp, err := db.GetPurchases(id)
+	order, _ := db.GetBasketOrder(id)
+	temp, err := db.GetPurchases(order.ID)
 	mesTxt, mesTyp := GenerateMessage(err, "не удалось получить данный корзины", "")
 	purchases := make([]interface{}, len(temp))
 	mass, cost := uint(0), uint(0)

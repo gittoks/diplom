@@ -25,9 +25,12 @@ func GetNavBar(buyerCookie BuyerCookie) []Nav {
 	if buyerCookie.ID == 0 {
 		navs = make([]Nav, len(navsGuess))
 		copy(navs, navsGuess)
-	} else {
+	} else if buyerCookie.Role == 0 {
 		navs = make([]Nav, len(navsLogin))
 		copy(navs, navsLogin)
+	} else {
+		navs = make([]Nav, len(navsAdmin))
+		copy(navs, navsAdmin)
 	}
 	return navs
 }

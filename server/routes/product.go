@@ -35,7 +35,8 @@ func ProductBuyHandlerPOST(w http.ResponseWriter, r *http.Request) {
 	if CheckLoginByCookie(cookie) {
 		var products interface{}
 		product, _ := strconv.Atoi(r.PostFormValue("id"))
-		err := db.CreatePurchase(cookie.ID, uint(product))
+		order, _ := db.GetBasketOrder(cookie.ID)
+		err := db.CreatePurchase(order.ID, uint(product))
 		mesTxt, mesTyp := GenerateMessage(err, "не удалось добавить продукт в корзину", "")
 		if err == nil {
 			typeID, distributorID := ParseURL(r)

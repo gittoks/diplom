@@ -27,6 +27,15 @@ var (
 		Nav{Href: "/registration", Name: "Регистрация"},
 		Nav{Href: "/login", Name: "Войти"},
 	}
+	navsAdmin = []Nav{
+		Nav{Href: "/", Name: "Информация"},
+		Nav{Href: "/product", Name: "Товары"},
+		Nav{Href: "/basket", Name: "Корзина"},
+		Nav{Href: "/account", Name: "Личный кабинет"},
+		Nav{Href: "/forum", Name: "Форум"},
+		Nav{Href: "/unlogin", Name: "Выйти"},
+		Nav{Href: "/admin", Name: "Админ"},
+	}
 )
 
 // Nav struct
