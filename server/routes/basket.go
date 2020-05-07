@@ -13,7 +13,8 @@ import (
 func BasketHandlerGET(w http.ResponseWriter, r *http.Request) {
 	cookie := GetCookie(w, r)
 	if CheckLoginByCookie(cookie) {
-		purchases, mesTxt, mesTyp := GeneratePurchases(cookie.ID)
+		order, _ := db.GetBasketOrder(cookie.ID)
+		purchases, mesTxt, mesTyp := GeneratePurchases(order)
 		Answer(w, GetNavBar(cookie), purchases, "basket.html", mesTxt, mesTyp, 2)
 	} else {
 		Answer(w, GetNavBar(cookie), nil, "login.html", "вы не авторизованы", "danger", 3)
@@ -43,7 +44,8 @@ func BasketHandlerPOST(w http.ResponseWriter, r *http.Request) {
 			}
 			break
 		}
-		purchases, mesTxt, mesTyp := GeneratePurchases(cookie.ID)
+		order, _ := db.GetBasketOrder(cookie.ID)
+		purchases, mesTxt, mesTyp := GeneratePurchases(order)
 		Answer(w, GetNavBar(GetCookie(w, r)), purchases, "basket.html", mesTxt, mesTyp, 2)
 	} else {
 		Answer(w, GetNavBar(cookie), nil, "login.html", "вы не авторизованы", "danger", 3)
@@ -51,8 +53,7 @@ func BasketHandlerPOST(w http.ResponseWriter, r *http.Request) {
 }
 
 // GeneratePurchases function
-func GeneratePurchases(id uint) (interface{}, string, string) {
-	order, _ := db.GetBasketOrder(id)
+func GeneratePurchases(order db.Order) (interface{}, string, string) {
 	temp, err := db.GetPurchases(order.ID)
 	mesTxt, mesTyp := GenerateMessage(err, "не удалось получить данный корзины", "")
 	purchases := make([]interface{}, len(temp))
@@ -64,5 +65,11 @@ func GeneratePurchases(id uint) (interface{}, string, string) {
 		cost += value.Cost
 		purchases[i] = value
 	}
-	return Basket{SumMass: mass, SumCost: cost, Purchases: purchases}, mesTxt, mesTyp
+	return Basket{
+		SumMass:   mass,
+		SumCost:   cost,
+		Purchases: purchases,
+		Order:     order,
+		Status:    db.DecodeOrderStatus(order),
+	}, mesTxt, mesTyp
 }

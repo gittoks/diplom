@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"net/http"
 
 	db "github.com/gittoks/diplom/server/database"
@@ -11,8 +12,14 @@ import (
 func AccountHandlerGET(w http.ResponseWriter, r *http.Request) {
 	cookie := GetCookie(w, r)
 	buyer, err := db.GetBuyerByID(cookie.ID)
+	orders, _ := db.GetOrders(cookie.ID)
+	ordersFull := make([]interface{}, len(orders))
+	for i, v := range orders {
+		ordersFull[i], _, _ = GeneratePurchases(v)
+	}
+	fmt.Println(ordersFull)
 	if err == nil {
-		Answer(w, GetNavBar(cookie), []interface{}{buyer}, "account.html", "", "", 3)
+		Answer(w, GetNavBar(cookie), AccountPage{ordersFull, buyer}, "account.html", "", "", 3)
 	} else {
 		Answer(w, GetNavBar(cookie), nil, "login.html", "вы не авторизованы", "danger", 0)
 	}
@@ -21,5 +28,5 @@ func AccountHandlerGET(w http.ResponseWriter, r *http.Request) {
 // AccountHandlerPOST Handler
 // handler POST method for /account
 func AccountHandlerPOST(w http.ResponseWriter, r *http.Request) {
-	Answer(w, GetNavBar(GetCookie(w, r)), nil, "account.html", "", "", 3)
+	AccountHandlerGET(w, r)
 }

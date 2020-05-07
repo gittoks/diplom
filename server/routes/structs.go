@@ -2,6 +2,8 @@ package routes
 
 import (
 	"html/template"
+
+	db "github.com/gittoks/diplom/server/database"
 )
 
 const (
@@ -58,6 +60,8 @@ type Data struct {
 // Basket struct
 type Basket struct {
 	Purchases []interface{}
+	Order     interface{}
+	Status    string
 	SumMass   uint
 	SumCost   uint
 }
@@ -74,4 +78,10 @@ type ProductPage struct {
 	Products     []interface{}
 	Distributors []ProductPageMenu
 	Types        []ProductPageMenu
+}
+
+// AccountPage struct
+type AccountPage struct {
+	Products interface{}
+	Buyer    db.Buyer
 }

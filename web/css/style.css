@@ -11,6 +11,11 @@
     color: #212529 !important;
 }
 
+.none-decor {
+    text-decoration: none !important;
+    color: #212529 !important;
+}
+
 .footer-text {
     margin-top: 18px;
 }

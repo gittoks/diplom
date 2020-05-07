@@ -28,7 +28,6 @@ func DeleteOrder(buyerID, status uint) error {
 
 func DeleteBasketOrder(buyerID uint) error {
 	order, _ := GetBasketOrder(buyerID)
-	DeleteOrder(buyerID, 1)
 	return DeletePurchases(order.ID)
 }
 
@@ -36,6 +35,12 @@ func GetOrder(buyerID, status uint) (Order, error) {
 	order := Order{}
 	err := gormDB.Where("buyer_id = ? AND status = ?", buyerID, status).First(&order).Error
 	return order, err
+}
+
+func GetOrders(buyerID uint) ([]Order, error) {
+	orders := []Order{}
+	err := gormDB.Where("buyer_id = ? AND status != 1", buyerID).Find(&orders).Error
+	return orders, err
 }
 
 func GetBasketOrder(buyerID uint) (Order, error) {
@@ -50,4 +55,18 @@ func GetBasketOrder(buyerID uint) (Order, error) {
 		err = gormDB.Create(&order).Error
 	}
 	return order, err
+}
+
+func DecodeOrderStatus(order Order) string {
+	switch order.Status {
+	case 1:
+		return "лежит в корзине"
+	case 2:
+		return "собирается"
+	case 3:
+		return "уже в пути"
+	case 4:
+		return "доставлен"
+	}
+	return ""
 }
