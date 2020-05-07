@@ -17,6 +17,7 @@ func Start() {
 	if err != nil {
 		panic(err)
 	}
+	db.LogMode(true)
 	gormDB = db
-	db.AutoMigrate(&Product{}, &Buyer{})
+	db.AutoMigrate(&Product{}, &Buyer{}, &Purchase{}, &Distributor{}, &Type{})
 }

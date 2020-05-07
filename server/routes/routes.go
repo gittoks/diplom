@@ -7,7 +7,8 @@ import (
 
 // Answer function
 // Response to server
-func Answer(w http.ResponseWriter, navs []Nav, data []interface{}, name, mesTxt, mesTyp string) {
+func Answer(w http.ResponseWriter, navs []Nav, data interface{}, name, mesTxt, mesTyp string, i int) {
+	navs[i].IsActive = "active"
 	tmpl.ExecuteTemplate(w, name, Data{
 		Navs:        navs,
 		Content:     data,
@@ -45,6 +46,7 @@ func GenerateMessage(err error, errText, sucText string) (string, string) {
 func SwitchHandler(get, post func(http.ResponseWriter, *http.Request)) func(http.ResponseWriter, *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 		r.ParseMultipartForm(MEMORY)
+		r.ParseForm()
 		switch r.Method {
 		case "GET":
 			get(w, r)
@@ -59,16 +61,21 @@ func SwitchHandler(get, post func(http.ResponseWriter, *http.Request)) func(http
 // Start function
 // init templates and run server
 func Start() {
-
-	tmpl, _ = template.ParseGlob("../web/templates/*")
+	var err error
+	tmpl, err = template.ParseGlob("../web/templates/*")
+	if err != nil {
+		panic(err)
+	}
 
 	http.Handle("/static/", http.StripPrefix("/static", http.FileServer(http.Dir("../web"))))
 
 	http.HandleFunc("/", InfoHandler)
-	http.HandleFunc("/product", ProductHandler)
 	http.HandleFunc("/unlogin", UnloginHandler)
+	http.HandleFunc("/product", SwitchHandler(ProductHandlerGET, ProductHandlerPOST))
 	http.HandleFunc("/login", SwitchHandler(LoginHandlerGET, LoginHandlerPOST))
 	http.HandleFunc("/registration", SwitchHandler(RegistrationHandlerGET, RegistrationHandlerPOST))
+	http.HandleFunc("/account", SwitchHandler(AccountHandlerGET, AccountHandlerPOST))
+	http.HandleFunc("/basket", SwitchHandler(BasketHandlerGET, BasketHandlerPOST))
 
 	http.ListenAndServe(":"+PORT, nil)
 }

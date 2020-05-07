@@ -17,7 +17,7 @@ var (
 		Nav{Href: "/", Name: "Информация"},
 		Nav{Href: "/product", Name: "Товары"},
 		Nav{Href: "/basket", Name: "Корзина"},
-		Nav{Href: "/profile", Name: "Личный кабинет"},
+		Nav{Href: "/account", Name: "Личный кабинет"},
 		Nav{Href: "/forum", Name: "Форум"},
 		Nav{Href: "/unlogin", Name: "Выйти"},
 	}
@@ -41,7 +41,28 @@ type Nav struct {
 // Standart response builder for server
 type Data struct {
 	Navs        []Nav
-	Content     []interface{}
+	Content     interface{}
 	Message     string
 	MessageType string
+}
+
+// Basket struct
+type Basket struct {
+	Purchases []interface{}
+	SumMass   uint
+	SumCost   uint
+}
+
+// ProductPageMenu struct
+type ProductPageMenu struct {
+	Name     string
+	ID       uint
+	IsActive string
+}
+
+// ProductPage struct
+type ProductPage struct {
+	Products     []interface{}
+	Distributors []ProductPageMenu
+	Types        []ProductPageMenu
 }

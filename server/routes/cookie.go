@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"strconv"
 	"strings"
+
+	db "github.com/gittoks/diplom/server/database"
 )
 
 // BuyerCookie structure
@@ -46,4 +48,19 @@ func GetCookie(w http.ResponseWriter, r *http.Request) BuyerCookie {
 		}
 	}
 	return buyerCookie
+}
+
+// CheckLoginByCookie function
+// return true if login
+func CheckLoginByCookie(cookie BuyerCookie) bool {
+	return cookie.ID != 0
+}
+
+// BuyerCookieByBuyer function
+// generate cookie from buyer
+func BuyerCookieByBuyer(buyer db.Buyer) BuyerCookie {
+	return BuyerCookie{
+		ID:   buyer.ID,
+		Role: buyer.Role,
+	}
 }

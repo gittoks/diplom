@@ -9,20 +9,23 @@ type Product struct {
 	Name          string
 	Description   string
 	Image         string
-	distributorID int
-	typeID        int
+	DistributorID uint
+	Weight        uint
+	Price         uint
+	TypeID        uint
 }
 
-func GetProducts() ([]Product, error) {
+func GetProducts(typeID, distributorID uint) ([]Product, error) {
 	products := []Product{}
-	err := gormDB.Select("*").Find(&products).Error
+	var err error
+	if typeID == 0 && distributorID != 0 {
+		err = gormDB.Where("distributor_id = ?", distributorID).Find(&products).Error
+	} else if distributorID == 0 && typeID != 0 {
+		err = gormDB.Where("type_id = ?", typeID).Find(&products).Error
+	} else if distributorID == 0 && typeID == 0 {
+		err = gormDB.Select("*").Find(&products).Error
+	} else {
+		err = gormDB.Where("type_id = ? AND distributor_id = ?", typeID, distributorID).Find(&products).Error
+	}
 	return products, err
-}
-
-func UpdateProducts(product Product) error {
-	return gormDB.Save(&product).Error
-}
-
-func AddProducts(product Product) error {
-	return gormDB.Create(&product).Error
 }
