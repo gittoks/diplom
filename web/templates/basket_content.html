@@ -1,0 +1,59 @@
+{{ if .Content.Purchases }}
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Позиция</th>
+                <th scope="col">Название</th>
+                <th scope="col">Цена, ₽</th>
+                <th scope="col">Количество, шт</th>
+                <th scope="col">Стоимость, ₽</th>
+                <th scope="col">Вес, гр</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{ range $index, $element := .Content.Purchases }}
+                <tr>
+                    <th scope="row">{{ $index }}</th>
+                    <td>{{ .Name }}</td>
+                    <td>{{ .Price }}</td>
+                    <td>{{ .Count }}</td>
+                    <td>{{ .Cost }}</td>
+                    <td>{{ .Mass }}</td>
+                    <td>
+                        <form method="POST" enctype="multipart/form-data">
+                            <input type="text" name="id" class="form-control" hidden value="{{ .Purchase.ID }}">
+                            <button type="submit" name="type" value="delete" class="close" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            {{ end }}
+            <tr>
+                <th></th>
+                <td></td>
+                <td></td>
+                <td>Итого</td>
+                <td>{{ .Content.SumCost }}</td>
+                <td>{{ .Content.SumMass }}</td>
+                <td></td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <div class="row">
+        <form class="col-6" method="POST" enctype="multipart/form-data">
+            <button type="submit" name="type" value="clear" class="btn btn-outline-danger">Очистить</button>
+        </form>
+        <form class="col-6" method="POST" enctype="multipart/form-data">
+            <button type="submit" name="type" value="submit" class="btn btn-primary btn-right">Заказать</button>
+        </form>
+    </div>
+{{ else }}
+    <div class="container">
+        <h5>Корзина пуста</h5>
+        <p>В данный момент корзина пуста, но в любой момент вы можете наполнить её нашими прекрасными продуктами! Обратите внимание на свежие фермерские продукты.</p>
+        <a href="/product">Перейти к продуктам</a>
+    </div>
+{{ end }}

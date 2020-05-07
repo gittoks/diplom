@@ -7,6 +7,8 @@
 .logo-text {
     font-family: journalism;
     font-size: 60px;
+    text-decoration: none !important;
+    color: #212529 !important;
 }
 
 .footer-text {
@@ -24,6 +26,26 @@
 
 .alert {
     position: fixed !important;
-    bottom: 20px;
+    top: 20px;
     right: 20px;
+}
+
+.btn-right {
+    position: absolute !important;
+    padding: .375rem .75rem;
+    right: 15px;
+}
+
+.list-group-item {
+    text-align: left;
+}
+
+.custom-item {
+    margin-left: 15px;
+}
+
+@media (min-width: 576px){
+    .card-columns {
+        column-count: 2 !important;
+    }
 }
