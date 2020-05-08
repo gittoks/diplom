@@ -2,6 +2,7 @@
     <h2>Заказы</h2>
     <br>
 
+    {{ if .Content.Products }}
     <div class="accordion" id="accordionExample">
     {{ range $index, $element := .Content.Products }}
         <div class="card">
@@ -52,32 +53,39 @@
         </div>
     {{ end }}
     </div>
+    {{ else }}
+    <div class="container">
+        <p>В данный момент заказов нет, но вы можете в любой сделать заказ из корзины!</p>
+        <a href="/basket">Перейти к корзине</a>
+    </div>
+    {{ end }}
 
     <br>
     <br>
     <h2>Опасная зона</h2>
     <br>
     <form method="POST" enctype="multipart/form-data">
-    <div class="row">
-        <div class="form-group col">
-            <label for="inputFirstName">Имя</label>
-            <input type="name" name="fname" class="form-control" id="inputFirstName" placeholder="{{ .Content.Buyer.FirstName }}">
+        <div class="row">
+            <div class="form-group col">
+                <label for="inputFirstName">Имя</label>
+                <input type="name" name="fname" class="form-control" id="inputFirstName" placeholder="{{ .Content.Buyer.FirstName }}">
+            </div>
+            <div class="form-group col">
+                <label for="inputSecondName">Фамилия</label>
+                <input type="name" name="sname" class="form-control" id="inputSecondName" placeholder="{{ .Content.Buyer.SecondName }}">
+            </div>
         </div>
-        <div class="form-group col">
-            <label for="inputSecondName">Фамилия</label>
-            <input type="name" name="sname" class="form-control" id="inputSecondName" placeholder="{{ .Content.Buyer.SecondName }}">
+        <div class="row">
+            <div class="form-group col">
+                <label for="inputPhone">Телефон</label>
+                <input type="name" name="phone" class="form-control" id="inputPhone" placeholder="{{ .Content.Buyer.PhoneNumber }}">
+            </div>
+            <div class="form-group col">
+                <label for="inputPassword">Пароль</label>
+                <input type="password" name="password" class="form-control" id="inputPassword" placeholder="{{ .Content.Buyer.Password }}">
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="form-group col">
-            <label for="inputPhone">Телефон</label>
-            <input type="name" name="phone" class="form-control" id="inputPhone" placeholder="{{ .Content.Buyer.PhoneNumber }}">
-        </div>
-        <div class="form-group col">
-            <label for="inputPassword">Пароль</label>
-            <input type="password" name="password" class="form-control" id="inputPassword" placeholder="{{ .Content.Buyer.Password }}">
-        </div>
-    </div>
-    <br>
-    <button type="submit" class="btn btn-primary">Редактировать</button>
+        <br>
+        <button type="submit" class="btn btn-primary">Редактировать</button>
+    </form>
 </div>

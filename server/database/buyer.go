@@ -64,3 +64,8 @@ func GetBuyerByID(id uint) (Buyer, error) {
 	).First(&buyer).Error
 	return buyer, err
 }
+
+// UpdateBuyer function
+func UpdateBuyer(buyer Buyer) error {
+	return gormDB.Save(&buyer).Error
+}

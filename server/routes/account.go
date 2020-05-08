@@ -26,5 +26,28 @@ func AccountHandlerGET(w http.ResponseWriter, r *http.Request) {
 // AccountHandlerPOST Handler
 // handler POST method for /account
 func AccountHandlerPOST(w http.ResponseWriter, r *http.Request) {
-	AccountHandlerGET(w, r)
+	cookie := GetCookie(w, r)
+	buyer, err := db.GetBuyerByID(cookie.ID)
+	if err == nil {
+		str := r.PostFormValue("fname")
+		if str != "" {
+			buyer.FirstName = str
+		}
+		str = r.PostFormValue("sname")
+		if str != "" {
+			buyer.SecondName = str
+		}
+		str = r.PostFormValue("phone")
+		if str != "" {
+			buyer.PhoneNumber = str
+		}
+		str = r.PostFormValue("password")
+		if str != "" {
+			buyer.Password = str
+		}
+		db.UpdateBuyer(buyer)
+		AccountHandlerGET(w, r)
+	} else {
+		Answer(w, GetNavBar(cookie), nil, "login.html", "вы не авторизованы", "danger", 0)
+	}
 }

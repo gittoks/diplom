@@ -1,0 +1,36 @@
+<div class="jumbotron">
+  <h1 class="display-8">{{ .Content.Topic.Name }}</h1>
+  <p class="lead">{{ .Content.Topic.Description }}</p>
+</div>
+<br>
+{{ if .Content.Comments }}
+    {{ range .Content.Comments }}
+    <div class="card" style="margin-bottom: 15px">
+        <div class="card-body">
+            <p class="card-text">{{ .Text }}</p>
+        </div>
+        <div class="card-footer footer-card-text text-muted">
+            <div class="row">
+                <p class="col-6">{{ .SecondName }} {{ .FirstName }}</p>
+                <p class="col-6 text-right">{{ .Date }}</p>
+            </div>
+        </div>
+    </div>
+    {{ end }}
+{{ else }}
+<div class="container">
+    <p>В данный момент комментариев нет!</p>
+</div>
+{{ end }}
+<br>
+<br>
+<h2>Написть комментарий</h2>
+<br>
+<form method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="inputName">Текст</label>
+        <input type="name" name="name" class="form-control" id="inputName">
+    </div>
+    <br>
+    <button type="submit" name="action" value="comment" class="btn btn-primary">Создать</button>
+</form>

@@ -22,6 +22,11 @@
     cursor: default !important;
 }
 
+.footer-card-text {
+    padding-top: 0.75em;
+    padding-bottom: 0em;
+}
+
 .footer-text {
     margin-top: 18px;
 }
@@ -44,6 +49,11 @@
 .btn-right {
     position: absolute !important;
     padding: .375rem .75rem;
+    right: 15px;
+}
+
+.text-right {
+    position: absolute !important;
     right: 15px;
 }
 

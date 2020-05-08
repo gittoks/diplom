@@ -85,3 +85,9 @@ type AccountPage struct {
 	Products interface{}
 	Buyer    db.Buyer
 }
+
+// CommentPage struct
+type CommentPage struct {
+	Comments interface{}
+	Topic    db.Topic
+}

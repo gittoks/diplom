@@ -79,6 +79,7 @@ func Start() {
 	http.HandleFunc("/", InfoHandler)
 	http.HandleFunc("/unlogin", UnloginHandler)
 	http.HandleFunc("/product", SwitchHandler(ProductHandlerGET, ProductHandlerPOST))
+	http.HandleFunc("/forum", SwitchHandler(ForumHandlerGET, ForumHandlerPOST))
 	http.HandleFunc("/login", SwitchHandler(LoginHandlerGET, LoginHandlerPOST))
 	http.HandleFunc("/registration", SwitchHandler(RegistrationHandlerGET, RegistrationHandlerPOST))
 	http.HandleFunc("/account", SwitchHandler(AccountHandlerGET, AccountHandlerPOST))

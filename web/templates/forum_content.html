@@ -1,0 +1,25 @@
+<h2>Топики</h2>
+<br>
+{{ range .Content }}
+    <div class="jumbotron">
+      <h1 class="display-8">{{ .Name }}</h1>
+      <p class="lead">{{ .Description }}</p>
+      <a class="btn btn-primary btn-lg" href="/forum?topic={{ .ID }}" role="button">Больше</a>
+    </div>
+{{ end }}
+<br>
+<h2>Создать топик</h2>
+<br>
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="inputName">Название</label>
+        <input type="name" name="name" class="form-control" id="inputName">
+    </div>
+    <div class="form-group">
+        <label for="inputDescription">Описание</label>
+        <input type="name" name="text" class="form-control" id="inputDescription">
+    </div>
+    <br>
+    <button type="submit" name="action" value="topic" class="btn btn-primary">Создать</button>
+</form>
