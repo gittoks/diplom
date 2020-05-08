@@ -16,6 +16,12 @@
     color: #212529 !important;
 }
 
+.text-date {
+    position: absolute !important;
+    right: 20px !important;
+    cursor: default !important;
+}
+
 .footer-text {
     margin-top: 18px;
 }

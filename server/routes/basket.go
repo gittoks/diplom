@@ -26,13 +26,16 @@ func BasketHandlerGET(w http.ResponseWriter, r *http.Request) {
 func BasketHandlerPOST(w http.ResponseWriter, r *http.Request) {
 	cookie := GetCookie(w, r)
 	if CheckLoginByCookie(cookie) {
+		mesTyp, mesTxt := "", ""
 		switch r.PostFormValue("type") {
 		case "delete":
-			id, _ := strconv.Atoi(r.PostFormValue("id"))
+			id, err := strconv.Atoi(r.PostFormValue("id"))
 			db.DeletePurchase(uint(id))
+			mesTxt, mesTyp = GenerateMessage(err, "не удалось удалить позицию", "успешно удалено")
 			break
 		case "clear":
-			db.DeleteBasketOrder(cookie.ID)
+			err := db.DeleteBasketOrder(cookie.ID)
+			mesTxt, mesTyp = GenerateMessage(err, "не удалось осободить корзину", "корзина пуста")
 			break
 		case "submit":
 			order, _ := db.GetBasketOrder(cookie.ID)
@@ -40,12 +43,13 @@ func BasketHandlerPOST(w http.ResponseWriter, r *http.Request) {
 			if count != 0 {
 				order.Status = 2
 				order.Data = time.Now().Format("15:04 02.01.2006")
-				db.UpdateOrder(order)
+				err := db.UpdateOrder(order)
+				mesTxt, mesTyp = GenerateMessage(err, "не удалось создать заказ", "заказ успешно создан")
 			}
 			break
 		}
 		order, _ := db.GetBasketOrder(cookie.ID)
-		purchases, mesTxt, mesTyp := GeneratePurchases(order)
+		purchases, _, _ := GeneratePurchases(order)
 		Answer(w, GetNavBar(GetCookie(w, r)), purchases, "basket.html", mesTxt, mesTyp, 2)
 	} else {
 		Answer(w, GetNavBar(cookie), nil, "login.html", "вы не авторизованы", "danger", 3)

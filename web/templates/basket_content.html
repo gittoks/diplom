@@ -14,7 +14,7 @@
         <tbody>
             {{ range $index, $element := .Content.Purchases }}
                 <tr>
-                    <th scope="row">{{ $index }}</th>
+                    <th scope="row">{{ increment $index }}</th>
                     <td>{{ .Name }}</td>
                     <td>{{ .Price }}</td>
                     <td>{{ .Count }}</td>

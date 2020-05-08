@@ -10,6 +10,7 @@
                     <button class="btn btn-link none-decor" type="button" data-toggle="collapse" data-target="#collapse{{ $index }}" aria-expanded="false">
                         Заказ с номером {{ .Order.ID }} на сумму {{ .SumCost }} ₽ {{ .Status }}
                     </button>
+                    <a class="btn btn-link none-decor text-date">{{ .Order.Data }}</a>
                 </h5>
             </div>
 
@@ -28,7 +29,7 @@
                         <tbody>
                             {{ range $i, $e := .Purchases }}
                                 <tr>
-                                    <th scope="row">{{ $i }}</th>
+                                    <th scope="row">{{ increment $i }}</th>
                                     <td>{{ .Name }}</td>
                                     <td>{{ .Price }}</td>
                                     <td>{{ .Count }}</td>

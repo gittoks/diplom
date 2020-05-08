@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"net/http"
 
 	db "github.com/gittoks/diplom/server/database"
@@ -17,7 +16,6 @@ func AccountHandlerGET(w http.ResponseWriter, r *http.Request) {
 	for i, v := range orders {
 		ordersFull[i], _, _ = GeneratePurchases(v)
 	}
-	fmt.Println(ordersFull)
 	if err == nil {
 		Answer(w, GetNavBar(cookie), AccountPage{ordersFull, buyer}, "account.html", "", "", 3)
 	} else {

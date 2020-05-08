@@ -65,7 +65,11 @@ func SwitchHandler(get, post func(http.ResponseWriter, *http.Request)) func(http
 // init templates and run server
 func Start() {
 	var err error
-	tmpl, err = template.ParseGlob("../web/templates/*")
+	tmpl, err = template.New("").Funcs(template.FuncMap{
+		"increment": func(i int) int {
+			return i + 1
+		},
+	}).ParseGlob("../web/templates/*")
 	if err != nil {
 		panic(err)
 	}
