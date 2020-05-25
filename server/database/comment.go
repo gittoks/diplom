@@ -28,3 +28,11 @@ func GetComments(id uint) ([]MoreComment, error) {
 		id).Scan(&comments).Error
 	return comments, err
 }
+
+func DeleteComment(id, buyerID uint) error {
+	return gormDB.Where("id = ? AND buyer_id = ?", id, buyerID).Delete(&Comment{}).Error
+}
+
+func DeleteCommentByTopic(id uint) error {
+	return gormDB.Where("topic_id = ?", id).Delete(&Comment{}).Error
+}

@@ -19,5 +19,5 @@ func Start() {
 	}
 	db.LogMode(true)
 	gormDB = db
-	db.AutoMigrate(&Product{}, &Buyer{}, &Purchase{}, &Distributor{}, &Type{}, &Order{}, &Seller{}, &Topic{}, &Comment{})
+	db.AutoMigrate(&Product{}, &Buyer{}, &Purchase{}, &Distributor{}, &Type{}, &Order{}, &Seller{}, &Topic{}, &Comment{}, &Package{}, &Box{})
 }

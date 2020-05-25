@@ -23,7 +23,7 @@ func ForumHandlerGET(w http.ResponseWriter, r *http.Request) {
 			for i, v := range topics {
 				interfaces[i] = v
 			}
-			Answer(w, GetNavBar(buyerCookie), interfaces, "forum.html", "", "", 4)
+			Answer(w, GetNavBar(buyerCookie), CommentPage{interfaces, buyerCookie, db.Topic{}}, "forum.html", "", "", 4)
 		} else {
 			topic, _ := db.GetTopic(uint(topic_id))
 			comments, _ := db.GetComments(uint(topic_id))
@@ -31,7 +31,7 @@ func ForumHandlerGET(w http.ResponseWriter, r *http.Request) {
 			for i, v := range comments {
 				interfaces[i] = v
 			}
-			Answer(w, GetNavBar(buyerCookie), CommentPage{interfaces, topic}, "forum_topic.html", "", "", 4)
+			Answer(w, GetNavBar(buyerCookie), CommentPage{interfaces, buyerCookie, topic}, "forum_topic.html", "", "", 4)
 		}
 
 	} else {
@@ -65,6 +65,17 @@ func ForumHandlerPOST(w http.ResponseWriter, r *http.Request) {
 				Date:    time.Now().Format("15:04 02.01.2006"),
 			}
 			db.CreateComment(comment)
+			break
+		case "delete_comment":
+			id, _ := strconv.Atoi(r.PostFormValue("id"))
+			db.DeleteComment(uint(id), buyerCookie.ID)
+			break
+		case "delete_topic":
+			if buyerCookie.Role == 1 {
+				id, _ := strconv.Atoi(r.PostFormValue("id"))
+				db.DeleteTopic(uint(id))
+				db.DeleteCommentByTopic(uint(id))
+			}
 			break
 		}
 	}

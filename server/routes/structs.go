@@ -60,6 +60,8 @@ type Data struct {
 // Basket struct
 type Basket struct {
 	Purchases []interface{}
+	Boxes     []db.Box
+	Count     []int
 	Order     interface{}
 	Status    string
 	SumMass   uint
@@ -89,5 +91,35 @@ type AccountPage struct {
 // CommentPage struct
 type CommentPage struct {
 	Comments interface{}
+	Cookie   BuyerCookie
 	Topic    db.Topic
+}
+
+// AdminPage struct
+type AdminPage struct {
+	Types           []db.Type
+	TypesNav        []uint
+	Distributors    []db.Distributor
+	DistributorsNav []uint
+	Products        []db.MoreProduct
+	ProductsNav     []uint
+	Orders          []db.MoreOrder
+	OrdersNav       []uint
+	Sellers         []db.Seller
+	SellersNav      []uint
+	Packages        []db.Package
+	PackagesNav     []uint
+	Boxes           []db.Box
+	BoxesNav        []uint
+	AllPackages     []db.Package
+	AllTypes        []db.Type
+	AllDistributors []db.Distributor
+}
+
+// ProductAdminPage struct
+type ProductAdminPage struct {
+	Product         db.Product
+	AllPackages     []db.Package
+	AllTypes        []db.Type
+	AllDistributors []db.Distributor
 }

@@ -26,3 +26,7 @@ func GetTopic(id uint) (Topic, error) {
 	err := gormDB.Where("id = ?", id).First(&topic).Error
 	return topic, err
 }
+
+func DeleteTopic(id uint) error {
+	return gormDB.Where("id = ?", id).Delete(&Topic{}).Error
+}

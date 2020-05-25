@@ -49,8 +49,7 @@ func ProductBuyHandlerPOST(w http.ResponseWriter, r *http.Request) {
 }
 
 func ProductClearHandlerPOST(w http.ResponseWriter, r *http.Request) {
-	products, mesTxt, mesTyp := GenerateProducts(0, 0)
-	Answer(w, GetNavBar(GetCookie(w, r)), products, "product.html", mesTxt, mesTyp, 1)
+	http.Redirect(w, r, "/product", http.StatusSeeOther)
 }
 
 // GenerateProducts function

@@ -3,6 +3,8 @@ package routes
 import (
 	"html/template"
 	"net/http"
+
+	db "github.com/gittoks/diplom/server/database"
 )
 
 // Answer function
@@ -69,6 +71,7 @@ func Start() {
 		"increment": func(i int) int {
 			return i + 1
 		},
+		"status": db.DecodeOrderStatus,
 	}).ParseGlob("../web/templates/*")
 	if err != nil {
 		panic(err)
@@ -78,6 +81,7 @@ func Start() {
 
 	http.HandleFunc("/", InfoHandler)
 	http.HandleFunc("/unlogin", UnloginHandler)
+	http.HandleFunc("/admin", SwitchHandler(AdminHandlerGET, AdminHandlerPOST))
 	http.HandleFunc("/product", SwitchHandler(ProductHandlerGET, ProductHandlerPOST))
 	http.HandleFunc("/forum", SwitchHandler(ForumHandlerGET, ForumHandlerPOST))
 	http.HandleFunc("/login", SwitchHandler(LoginHandlerGET, LoginHandlerPOST))

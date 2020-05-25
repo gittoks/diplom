@@ -2,6 +2,7 @@ package routes
 
 import (
 	"net/http"
+	"sort"
 	"strconv"
 	"time"
 
@@ -69,11 +70,81 @@ func GeneratePurchases(order db.Order) (interface{}, string, string) {
 		cost += value.Cost
 		purchases[i] = value
 	}
-	return Basket{
-		SumMass:   mass,
-		SumCost:   cost,
-		Purchases: purchases,
-		Order:     order,
-		Status:    db.DecodeOrderStatus(order),
-	}, mesTxt, mesTyp
+
+	boxx := [][]int{}
+	boxes, _ := db.GetBoxes()
+
+	sort.Slice(boxes, func(i, j int) bool {
+		return boxes[i].Weight < boxes[j].Weight
+	})
+
+	for i, b := range boxes {
+		if b.Weight >= mass {
+			return Basket{
+				SumMass:   mass,
+				SumCost:   cost,
+				Boxes:     []db.Box{b},
+				Count:     []int{1},
+				Purchases: purchases,
+				Order:     order,
+				Status:    db.DecodeOrderStatus(order),
+			}, mesTxt, mesTyp
+		} else if b.Weight*2 >= mass && i != len(boxes)-1 {
+			return Basket{
+				SumMass:   mass,
+				SumCost:   cost,
+				Boxes:     []db.Box{b},
+				Count:     []int{2},
+				Purchases: purchases,
+				Order:     order,
+				Status:    db.DecodeOrderStatus(order),
+			}, mesTxt, mesTyp
+		}
+	}
+
+	for i := 0; i < len(boxes); i++ {
+		for j := i; j < len(boxes); j++ {
+			b := boxes[i].Weight + boxes[j].Weight
+			if b >= mass {
+				boxx = append(boxx, []int{int(b), i, j})
+			}
+		}
+	}
+
+	sort.Slice(boxx, func(i, j int) bool {
+		return boxx[i][0] < boxx[j][0]
+	})
+
+	if len(boxx) != 0 {
+		if boxx[0][1] == boxx[0][2] {
+			return Basket{
+				SumMass:   mass,
+				SumCost:   cost,
+				Boxes:     []db.Box{boxes[boxx[0][1]]},
+				Count:     []int{2},
+				Purchases: purchases,
+				Order:     order,
+				Status:    db.DecodeOrderStatus(order),
+			}, mesTxt, mesTyp
+		}
+		return Basket{
+			SumMass:   mass,
+			SumCost:   cost,
+			Boxes:     []db.Box{boxes[boxx[0][1]], boxes[boxx[0][2]]},
+			Count:     []int{1, 1},
+			Purchases: purchases,
+			Order:     order,
+			Status:    db.DecodeOrderStatus(order),
+		}, mesTxt, mesTyp
+	} else {
+		return Basket{
+			SumMass:   mass,
+			SumCost:   cost,
+			Boxes:     []db.Box{boxes[len(boxes)-1]},
+			Count:     []int{int((mass / boxes[len(boxes)-1].Weight)) + 1},
+			Purchases: purchases,
+			Order:     order,
+			Status:    db.DecodeOrderStatus(order),
+		}, mesTxt, mesTyp
+	}
 }
