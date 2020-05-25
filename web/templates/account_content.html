@@ -47,6 +47,17 @@
                                 <td>{{ .SumMass }}</td>
                                 <td></td>
                             </tr>
+                            {{ $val := .Count}}
+                            {{ range $index, $element := .Boxes }}
+                                <tr>
+                                    <th></th>
+                                    <td></td>
+                                    <td>{{ .Name }}</td>
+                                    <td>{{ index $val $index }}</td>
+                                    <td></td>
+                                    <td>{{ .Weight }}</td>
+                                </tr>
+                            {{ end }}
                         </tbody>
                     </table>
             </div>

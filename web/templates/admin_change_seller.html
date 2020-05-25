@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+    {{ template "head.html" . }}
+    <body>
+        <div class="container">
+            {{ template "header.html" . }}
+
+            <div class="content">
+                {{ template "admin_change_content_seller.html" . }}
+            </div>
+
+            {{ template "footer.html" . }}
+            {{ template "message.html" . }}
+        </div>
+    </body>
+    {{ template "scripts.html" . }}
+</html>

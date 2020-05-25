@@ -38,15 +38,16 @@
             <div class="card">
               <img src="/static/res/{{ .Image }}" class="card-img-top">
               <div class="card-body">
-                <h5 class="card-title">{{ .Name }}</h5>
-                <p class="card-text">{{ .Description }}</p>
+                <h5 class="card-title">{{ .Product.Name }}</h5>
+                <p class="card-text">{{ .Product.Description }}</p>
+                <p class="card-text">Тип упаковки: {{ .Package.Name }}</p>
                 <div class="row">
                     <form class="col-6" method="POST" enctype="multipart/form-data">
-                        <input type="text" name="id" class="form-control" hidden value="{{ .ID }}">
-                        <button type="submit" name="type" value="buy" class="btn btn-outline-primary">{{ .Price }} ₽</button>
+                        <input type="text" name="id" class="form-control" hidden value="{{ .Product.ID }}">
+                        <button type="submit" name="type" value="buy" class="btn btn-outline-primary">{{ .Product.Price }} ₽</button>
                     </form>
                     <div class="col-6">
-                        <a class="btn-right">{{ .Weight }} гр</a>
+                        <a class="btn-right">{{ .Product.Weight }} гр</a>
                     </div>
                 </div>
               </div>

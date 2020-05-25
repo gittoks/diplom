@@ -70,3 +70,18 @@
         column-count: 2 !important;
     }
 }
+
+.tdtd {
+    position: relative;
+    width: 250px;
+}
+
+.btn-edit {
+    position: absolute;
+    right: 100px;
+}
+
+.btn-delete {
+    position: absolute;
+    right: 15px;
+}

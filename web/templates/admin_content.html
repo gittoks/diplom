@@ -1,0 +1,394 @@
+<h2>Управление типами тар</h2>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Позиция</th>
+            <th scope="col">Название</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range $index, $element := .Content.Packages }}
+            <tr>
+                <th scope="row">{{ increment $index }}</th>
+                <td>{{ .Name }}</td>
+                <td class="tdtd">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="text" name="id" value="{{ .ID }}" hidden>
+                        <button class="btn btn-primary btn-sm btn-delete" name="action" value="action_edit_packages">Редактировать</button>
+                    </form>
+                </td>
+            </tr>
+        {{ end }}
+    </tbody>
+</table>
+<nav>
+    <ul class="pagination justify-content-center" >
+    {{ range $index, $element := .Content.PackagesNav }}
+        <form method="POST" enctype="multipart/form-data" class="page-item {{ if $element }}active{{ end }}">
+            <input type="text" name="id" value="{{ increment $index }}" hidden>
+            <button class="page-link" type="submit" name="action" value="action_page_packages">{{ increment $index }}</button>
+        </form>
+    {{ end }}
+    </ul>
+</nav>
+<form method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="inputFirstName">Название</label>
+        <input type="name" name="name" class="form-control" id="inputFirstName">
+    </div>
+    <button class="btn btn-primary" type="submit" name="action" value="action_create_packages">Создать</button>
+</form>
+
+<br>
+<br>
+<h2>Управление типами упаковок</h2>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Позиция</th>
+            <th scope="col">Название</th>
+            <th scope="col">Вес</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range $index, $element := .Content.Boxes }}
+            <tr>
+                <th scope="row">{{ increment $index }}</th>
+                <td>{{ .Name }}</td>
+                <td>{{ .Weight }}</td>
+                <td class="tdtd">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="text" name="id" value="{{ .ID }}" hidden>
+                        <button class="btn btn-primary btn-sm btn-delete" name="action" value="action_edit_boxes">Редактировать</button>
+                    </form>
+                </td>
+            </tr>
+        {{ end }}
+    </tbody>
+</table>
+<nav>
+    <ul class="pagination justify-content-center" >
+    {{ range $index, $element := .Content.BoxesNav }}
+        <form method="POST" enctype="multipart/form-data" class="page-item {{ if $element }}active{{ end }}">
+            <input type="text" name="id" value="{{ increment $index }}" hidden>
+            <button class="page-link" type="submit" name="action" value="action_page_boxes">{{ increment $index }}</button>
+        </form>
+    {{ end }}
+    </ul>
+</nav>
+<form method="POST" enctype="multipart/form-data">
+    <div class="row">
+        <div class="form-group col">
+            <label for="inputFirstName">Название</label>
+            <input type="name" name="name" class="form-control" id="inputFirstName">
+        </div>
+        <div class="form-group col">
+            <label for="inputSecondName">Максимальный вес</label>
+            <input type="name" name="weight" class="form-control" id="inputSecondName">
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit" name="action" value="action_create_boxes">Создать</button>
+</form>
+
+<br>
+<br>
+<h2>Управление типами товаров</h2>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Позиция</th>
+            <th scope="col">Название</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range $index, $element := .Content.Types }}
+            <tr>
+                <th scope="row">{{ increment $index }}</th>
+                <td>{{ .Name }}</td>
+                <td class="tdtd">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="text" name="id" value="{{ .ID }}" hidden>
+                        <button class="btn btn-primary btn-sm btn-delete" name="action" value="action_edit_types">Редактировать</button>
+                    </form>
+                </td>
+            </tr>
+        {{ end }}
+    </tbody>
+</table>
+<nav>
+    <ul class="pagination justify-content-center" >
+    {{ range $index, $element := .Content.TypesNav }}
+        <form method="POST" enctype="multipart/form-data" class="page-item {{ if $element }}active{{ end }}">
+            <input type="text" name="id" value="{{ increment $index }}" hidden>
+            <button class="page-link" type="submit" name="action" value="action_page_types">{{ increment $index }}</button>
+        </form>
+    {{ end }}
+    </ul>
+</nav>
+<form method="POST" enctype="multipart/form-data">
+    <div class="form-group">
+        <label for="inputFirstName">Название</label>
+        <input type="name" name="name" class="form-control" id="inputFirstName">
+    </div>
+    <button class="btn btn-primary" type="submit" name="action" value="action_create_types">Создать</button>
+</form>
+
+<br>
+<br>
+<h2>Управление поставщиками</h2>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Позиция</th>
+            <th scope="col">Название</th>
+            <th scope="col">Город</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range $index, $element := .Content.Distributors }}
+            <tr>
+                <th scope="row">{{ increment $index }}</th>
+                <td>{{ .Name }}</td>
+                <td>{{ .City }}</td>
+                <td class="tdtd">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="text" name="id" value="{{ .ID }}" hidden>
+                        <button class="btn btn-primary btn-sm btn-delete" name="action" value="action_edit_distributors">Редактировать</button>
+                    </form>
+                </td>
+            </tr>
+        {{ end }}
+    </tbody>
+</table>
+<nav>
+    <ul class="pagination justify-content-center" >
+    {{ range $index, $element := .Content.DistributorsNav }}
+        <form method="POST" enctype="multipart/form-data" class="page-item {{ if $element }}active{{ end }}">
+            <input type="text" name="id" value="{{ increment $index }}" hidden>
+            <button class="page-link" type="submit" name="action" value="action_page_distrbutors">{{ increment $index }}</button>
+        </form>
+    {{ end }}
+    </ul>
+</nav>
+<form method="POST" enctype="multipart/form-data">
+    <div class="row">
+        <div class="form-group col">
+            <label for="inputFirstName">Название</label>
+            <input type="name" name="name" class="form-control" id="inputFirstName">
+        </div>
+        <div class="form-group col">
+            <label for="inputSecondName">Город</label>
+            <input type="name" name="city" class="form-control" id="inputSecondName">
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit" name="action" value="action_create_distributors">Создать</button>
+</form>
+
+<br>
+<br>
+<h2>Управление товарами</h2>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Позиция</th>
+            <th scope="col">Название</th>
+            <th scope="col">Описание</th>
+            <th scope="col">Вес</th>
+            <th scope="col">Цена</th>
+            <th scope="col">Поставщик</th>
+            <th scope="col">Упаковка</th>
+            <th scope="col">Тип</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range $index, $element := .Content.Products }}
+            <tr>
+                <th scope="row">{{ increment $index }}</th>
+                <td>{{ .Product.Name }}</td>
+                <td>{{ .Product.Description }}</td>
+                <td>{{ .Product.Weight }}</td>
+                <td>{{ .Product.Price }}</td>
+                <td>{{ .Distributor.Name }}</td>
+                <td>{{ .Package.Name }}</td>
+                <td>{{ .Type.Name }}</td>
+                <td class="tdtd">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="text" name="id" value="{{ .Product.ID }}" hidden>
+                        <button class="btn btn-primary btn-sm btn-edit" name="action" value="action_edit_products">Редактировать</button>
+                        <button class="btn btn-outline-danger btn-sm btn-delete" name="action" value="action_delete_products">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        {{ end }}
+    </tbody>
+</table>
+<nav>
+    <ul class="pagination justify-content-center" >
+    {{ range $index, $element := .Content.ProductsNav }}
+        <form method="POST" enctype="multipart/form-data" class="page-item {{ if $element }}active{{ end }}">
+            <input type="text" name="id" value="{{ increment $index }}" hidden>
+            <button class="page-link" type="submit" name="action" value="action_page_products">{{ increment $index }}</button>
+        </form>
+    {{ end }}
+    </ul>
+</nav>
+<form method="POST" enctype="multipart/form-data">
+    <div class="row">
+        <div class="form-group col">
+            <label for="inputFirsName">Название</label>
+            <input type="name" name="name" class="form-control" id="inputFirsName">
+        </div>
+        <div class="form-group col">
+            <label for="inputFirstName">Вес</label>
+            <input type="name" name="weight" class="form-control" id="inputFirstName">
+        </div>
+        <div class="form-group col">
+            <label for="inputSecondName">Цена</label>
+            <input type="name" name="price" class="form-control" id="inputSecondName">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col">
+            <label for="exampleFormControlSelect2">Поставщик</label>
+            <select class="form-control" name="distributor" id="exampleFormControlSelect2">
+                {{ range $index, $element := .Content.AllDistributors }}
+                <option value="{{ .ID }}">{{ .Name }}</option>
+                {{end}}
+            </select>
+        </div>
+        <div class="form-group col">
+            <label for="exampleFormControlSelect3">Тип</label>
+            <select class="form-control" name="type" id="exampleFormControlSelect3">
+                {{ range $index, $element := .Content.AllTypes }}
+                <option value="{{ .ID }}">{{ .Name }}</option>
+                {{end}}
+            </select>
+        </div>
+        <div class="form-group col">
+            <label for="exampleFormControlSelect4">Упаковка</label>
+            <select class="form-control" name="package" id="exampleFormControlSelect4">
+                {{ range $index, $element := .Content.AllPackages }}
+                <option value="{{ .ID }}">{{ .Name }}</option>
+                {{end}}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputFirstName">Изображение</label>
+        <input type="name" name="image" class="form-control" id="inputFirstName">
+    </div>
+    <div class="form-group">
+        <label for="inputFirstName">Описание</label>
+        <textarea type="name" name="description" class="form-control" id="inputFirstName" row="3"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit" name="action" value="action_create_products">Создать</button>
+</form>
+
+<br>
+<br>
+<h2>Управление заказами</h2>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Позиция</th>
+            <th scope="col">Покупатель</th>
+            <th scope="col">Продавец</th>
+            <th scope="col">Статус</th>
+            <th scope="col">Дата</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range $index, $element := .Content.Orders }}
+            <tr>
+                <th scope="row">{{ increment $index }}</th>
+                <td>{{ .Buyer.SecondName }} {{ .Buyer.FirstName }}</td>
+                <td>{{ .Seller.Name }}</td>
+                <td>{{ status .Order }}</td>
+                <td>{{ .Order.Data }}</td>
+                <td class="tdtd">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="text" name="id" value="{{ .Order.ID }}" hidden>
+                        <button class="btn btn-primary btn-sm btn-edit" name="action" value="action_edit_orders">Обновить</button>
+                        <button class="btn btn-outline-danger btn-sm btn-delete" name="action" value="action_delete_orders">Отменить</button>
+                    </form>
+                </td>
+            </tr>
+        {{ end }}
+    </tbody>
+</table>
+<nav>
+    <ul class="pagination justify-content-center" >
+    {{ range $index, $element := .Content.OrdersNav }}
+        <form method="POST" enctype="multipart/form-data" class="page-item {{ if $element }}active{{ end }}">
+            <input type="text" name="id" value="{{ increment $index }}" hidden>
+            <button class="page-link" type="submit" name="action" value="action_page_orders">{{ increment $index }}</button>
+        </form>
+    {{ end }}
+    </ul>
+</nav>
+
+<br>
+<br>
+<h2>Управление продавцами</h2>
+<br>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Позиция</th>
+            <th scope="col">ФИО</th>
+            <th scope="col">Телефон</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range $index, $element := .Content.Sellers }}
+            <tr>
+                <th scope="row">{{ increment $index }}</th>
+                <td>{{ .Name }}</td>
+                <td>{{ .Phone }}</td>
+                <td class="tdtd">
+                    <form method="POST" enctype="multipart/form-data">
+                        <input type="text" name="id" value="{{ .ID }}" hidden>
+                        <button class="btn btn-primary btn-sm btn-edit" name="action" value="action_edit_sellers">Редактировать</button>
+                        <button class="btn btn-outline-danger btn-sm btn-delete" name="action" value="action_delete_sellers">Удалить</button>
+                    </form>
+                </td>
+            </tr>
+        {{ end }}
+    </tbody>
+</table>
+<nav>
+    <ul class="pagination justify-content-center" >
+    {{ range $index, $element := .Content.SellersNav }}
+        <form method="POST" enctype="multipart/form-data" class="page-item {{ if $element }}active{{ end }}">
+            <input type="text" name="id" value="{{ increment $index }}" hidden>
+            <button class="page-link" type="submit" name="action" value="action_page_sellers">{{ increment $index }}</button>
+        </form>
+    {{ end }}
+    </ul>
+</nav>
+<form method="POST" enctype="multipart/form-data">
+    <div class="row">
+        <div class="form-group col">
+            <label for="inputFirstName">ФИО</label>
+            <input type="name" name="name" class="form-control" id="inputFirstName">
+        </div>
+        <div class="form-group col">
+            <label for="inputSecondName">Телефон</label>
+            <input type="name" name="phone" class="form-control" id="inputSecondName">
+        </div>
+    </div>
+    <button class="btn btn-primary" type="submit" name="action" value="action_create_sellers">Создать</button>
+</form>

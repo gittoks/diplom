@@ -1,0 +1,55 @@
+<h2>Изменение типа товара</h2>
+<br>
+{{ $val := .Content.Product}}
+<form method="POST" enctype="multipart/form-data">
+    <div class="row">
+        <div class="form-group col">
+            <label for="inputFirsName">Название</label>
+            <input type="name" name="name" class="form-control" id="inputFirsName" value="{{ .Content.Product.Name }}">
+        </div>
+        <div class="form-group col">
+            <label for="inputFirstName">Вес</label>
+            <input type="name" name="weight" class="form-control" id="inputFirstName" value="{{ .Content.Product.Weight }}">
+        </div>
+        <div class="form-group col">
+            <label for="inputSecondName">Цена</label>
+            <input type="name" name="price" class="form-control" id="inputSecondName" value="{{ .Content.Product.Price }}">
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group col">
+            <label for="exampleFormControlSelect2">Поставщик</label>
+            <select class="form-control" name="distributor" id="exampleFormControlSelect2">
+                {{ range $index, $element := .Content.AllDistributors }}
+                <option value="{{ .ID }}" {{ if eq .ID $val.DistributorID }}selected{{end}}>{{ .Name }}</option>
+                {{end}}
+            </select>
+        </div>
+        <div class="form-group col">
+            <label for="exampleFormControlSelect3">Тип</label>
+            <select class="form-control" name="type" id="exampleFormControlSelect3">
+                {{ range $index, $element := .Content.AllTypes }}
+                <option value="{{ .ID }}" {{ if eq .ID $val.TypeID }}selected{{end}}>{{ .Name }}</option>
+                {{end}}
+            </select>
+        </div>
+        <div class="form-group col">
+            <label for="exampleFormControlSelect4">Упаковка</label>
+            <select class="form-control" name="package" id="exampleFormControlSelect4">
+                {{ range $index, $element := .Content.AllPackages }}
+                <option value="{{ .ID }}" {{ if eq .ID $val.PackageID }}selected{{end}}>{{ .Name }}</option>
+                {{end}}
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputFirstName">Изображение</label>
+        <input type="name" name="image" class="form-control" id="inputFirstName">
+    </div>
+    <div class="form-group">
+        <label for="inputFirstName">Описание</label>
+        <textarea type="name" name="description" class="form-control" id="inputFirstName" row="3">{{ .Content.Product.Description }}</textarea>
+    </div>
+    <input type="name" name="id" value="{{ .Content.Product.ID }}" hidden>
+    <button class="btn btn-primary" type="submit" name="action" value="action_update_products">Изменить</button>
+</form>

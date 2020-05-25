@@ -1,4 +1,5 @@
 {{ if .Content.Purchases }}
+{{ $val := .Content.Count }}
     <table class="table">
         <thead>
             <tr>
@@ -39,6 +40,16 @@
                 <td>{{ .Content.SumMass }}</td>
                 <td></td>
             </tr>
+            {{ range $index, $element := .Content.Boxes }}
+                <tr>
+                    <th></th>
+                    <td></td>
+                    <td>{{ .Name }}</td>
+                    <td>{{ index $val $index }}</td>
+                    <td></td>
+                    <td>{{ .Weight }}</td>
+                </tr>
+            {{ end }}
         </tbody>
     </table>
     <br>
