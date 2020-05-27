@@ -1,0 +1,16 @@
+<h2>Изменение поставщика</h2>
+<br>
+<form method="POST" enctype="multipart/form-data">
+    <div class="row">
+        <div class="form-group col">
+            <label for="inputFirstName">Название</label>
+            <input type="name" name="name" class="form-control" id="inputFirstName" value="{{ .Content.Name }}">
+        </div>
+        <div class="form-group col">
+            <label for="inputSecondName">Вес</label>
+            <input type="name" name="weight" class="form-control" id="inputSecondName" value="{{ .Content.Weight }}">
+        </div>
+    </div>
+    <input type="name" name="id" class="form-control" value="{{ .Content.ID }}" hidden>
+    <button class="btn btn-primary" type="submit" name="action" value="action_update_box">Изменить</button>
+</form>
