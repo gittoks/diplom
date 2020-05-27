@@ -263,6 +263,14 @@ func AdminHandlerPOST(w http.ResponseWriter, r *http.Request) {
 		case "action_update_sellers":
 			db.UpdateSeller(r)
 			break
+		case "action_update_box":
+			db.UpdateBox(r)
+			break
+		case "action_edit_boxes":
+			id, _ := strconv.Atoi(r.PostFormValue("id"))
+			types, _ := db.GetBoxByID(uint(id))
+			Answer(w, GetNavBar(cookie), types, "admin_change_box.html", "", "", 6)
+			break
 		}
 
 		http.Redirect(w, r,

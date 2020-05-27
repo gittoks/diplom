@@ -63,6 +63,7 @@ func GeneratePurchases(order db.Order) (interface{}, string, string) {
 	mesTxt, mesTyp := GenerateMessage(err, "не удалось получить данный корзины", "")
 	purchases := make([]interface{}, len(temp))
 	mass, cost := uint(0), uint(0)
+
 	for i, value := range temp {
 		value.Cost = value.Price * value.Count
 		value.Mass = value.Weight * value.Count
