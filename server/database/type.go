@@ -38,7 +38,11 @@ func GetTypesCount() uint {
 }
 
 func DeleteTypes(id uint) error {
-	return gormDB.Where("id = ?", id).Delete(&Type{}).Error
+	a := 0
+	if gormDB.Model(&Product{}).Where("type_id = ?", id).Count(&a); a == 0 {
+		return gormDB.Where("id = ?", id).Delete(&Type{}).Error
+	}
+	return nil
 }
 
 func CreateType(r *http.Request) error {

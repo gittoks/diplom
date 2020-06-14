@@ -42,6 +42,14 @@ func GetPackageByID(id uint) (Package, error) {
 	return pkg, err
 }
 
+func DeletePackages(id uint) (error) {
+	a := 0
+	if gormDB.Model(&Product{}).Where("package_id = ?", id).Count(&a); a == 0 {
+		return gormDB.Where("id = ?", id).Delete(&Package{}).Error
+	}
+	return nil
+}
+
 func UpdatePackage(r *http.Request) error {
 	id, _ := strconv.Atoi(r.PostFormValue("id"))
 	types := Package{}

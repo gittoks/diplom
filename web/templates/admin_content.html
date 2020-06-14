@@ -16,7 +16,8 @@
                 <td class="tdtd">
                     <form method="POST" enctype="multipart/form-data">
                         <input type="text" name="id" value="{{ .ID }}" hidden>
-                        <button class="btn btn-primary btn-sm btn-delete" name="action" value="action_edit_packages">Редактировать</button>
+                        <button class="btn btn-primary btn-sm btn-edit" name="action" value="action_edit_packages">Редактировать</button>
+                        <button class="btn btn-outline-danger btn-sm btn-delete" name="action" value="action_delete_packages">Удалить</button>
                     </form>
                 </td>
             </tr>
@@ -63,7 +64,8 @@
                 <td class="tdtd">
                     <form method="POST" enctype="multipart/form-data">
                         <input type="text" name="id" value="{{ .ID }}" hidden>
-                        <button class="btn btn-primary btn-sm btn-delete" name="action" value="action_edit_boxes">Редактировать</button>
+                        <button class="btn btn-primary btn-sm btn-edit" name="action" value="action_edit_boxes">Редактировать</button>
+                        <button class="btn btn-outline-danger btn-sm btn-delete" name="action" value="action_delete_boxes">Удалить</button>
                     </form>
                 </td>
             </tr>
@@ -114,7 +116,8 @@
                 <td class="tdtd">
                     <form method="POST" enctype="multipart/form-data">
                         <input type="text" name="id" value="{{ .ID }}" hidden>
-                        <button class="btn btn-primary btn-sm btn-delete" name="action" value="action_edit_types">Редактировать</button>
+                        <button class="btn btn-primary btn-sm btn-edit" name="action" value="action_edit_types">Редактировать</button>
+                        <button class="btn btn-outline-danger btn-sm btn-delete" name="action" value="action_delete_types">Удалить</button>
                     </form>
                 </td>
             </tr>
@@ -161,7 +164,8 @@
                 <td class="tdtd">
                     <form method="POST" enctype="multipart/form-data">
                         <input type="text" name="id" value="{{ .ID }}" hidden>
-                        <button class="btn btn-primary btn-sm btn-delete" name="action" value="action_edit_distributors">Редактировать</button>
+                        <button class="btn btn-primary btn-sm btn-edit" name="action" value="action_edit_distributors">Редактировать</button>
+                        <button class="btn btn-outline-danger btn-sm btn-delete" name="action" value="action_delete_distributors">Удалить</button>
                     </form>
                 </td>
             </tr>

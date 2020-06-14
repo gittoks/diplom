@@ -45,6 +45,10 @@ func GetBoxByID(id uint) (Box, error) {
 	return pkg, err
 }
 
+func DeleteBoxes(id uint) (error) {
+	return gormDB.Where("id = ?", id).Delete(&Box{}).Error
+}
+
 func UpdateBox(r *http.Request) error {
 	id, _ := strconv.Atoi(r.PostFormValue("id"))
 	weight, _ := strconv.Atoi(r.PostFormValue("weight"))

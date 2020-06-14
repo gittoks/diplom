@@ -33,7 +33,11 @@ func GetDistributorsCount() uint {
 }
 
 func DeleteDistributors(id uint) error {
-	return gormDB.Where("id = ?", id).Delete(&Distributor{}).Error
+	a := 0
+	if gormDB.Model(&Product{}).Where("distributor_id = ?", id).Count(&a); a == 0{
+		return gormDB.Where("id = ?", id).Delete(&Distributor{}).Error
+	}
+	return nil
 }
 
 func CreateDistributor(r *http.Request) error {

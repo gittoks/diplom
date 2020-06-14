@@ -233,6 +233,14 @@ func AdminHandlerPOST(w http.ResponseWriter, r *http.Request) {
 		case "action_update_packages":
 			db.UpdatePackage(r)
 			break
+		case "action_delete_packages":
+			id, _ := strconv.Atoi(r.PostFormValue("id"))
+			db.DeletePackages(uint(id))
+			break
+		case "action_delete_boxes":
+			id, _ := strconv.Atoi(r.PostFormValue("id"))
+			db.DeleteBoxes(uint(id))
+			break
 		case "action_edit_products":
 			id, _ := strconv.Atoi(r.PostFormValue("id"))
 			pkg, _ := db.GetProductByID(uint(id))
